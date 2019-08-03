@@ -1,15 +1,16 @@
-package guru.springframework.domain;
+package pl.videoaggregate.domain;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-public class Product {
+public class VideoLink {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @Version
+
     private Integer version;
 
     private String productId;

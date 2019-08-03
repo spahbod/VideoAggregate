@@ -1,42 +1,38 @@
-package guru.springframework.repositories;
+package pl.videoaggregate.repositories;
 
-import guru.springframework.configuration.RepositoryConfiguration;
-import guru.springframework.domain.Product;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import pl.videoaggregate.configuration.VideoLinkConfiguration;
+import pl.videoaggregate.domain.VideoLink;
 
 import java.math.BigDecimal;
 
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = {RepositoryConfiguration.class})
-public class ProductRepositoryTest {
-
-    private ProductRepository productRepository;
+@SpringBootTest(classes = {VideoLinkConfiguration.class})
+public class VideoLinkRepositoryTest {
 
     @Autowired
-    public void setProductRepository(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    private VideoLinkRepository videoLinkRepository;
 
     @Test
     public void testSaveProduct(){
         //setup product
-        Product product = new Product();
+        VideoLink product = new VideoLink();
         product.setDescription("Spring Framework Guru Shirt");
         product.setPrice(new BigDecimal("18.95"));
         product.setProductId("1234");
 
         //save product, verify has ID value after save
         assertNull(product.getId()); //null before save
-        productRepository.save(product);
+        videoLinkRepository.save(product);
         assertNotNull(product.getId()); //not null after save
         //fetch from DB
-        Product fetchedProduct = productRepository.findById(product.getId()).orElse(null);
+        VideoLink fetchedProduct = videoLinkRepository.findById(product.getId()).orElse(null);
 
         //should not be null
         assertNotNull(fetchedProduct);
@@ -47,22 +43,22 @@ public class ProductRepositoryTest {
 
         //update description and save
         fetchedProduct.setDescription("New Description");
-        productRepository.save(fetchedProduct);
+        videoLinkRepository.save(fetchedProduct);
 
         //get from DB, should be updated
-        Product fetchedUpdatedProduct = productRepository.findById(fetchedProduct.getId()).orElse(null);
+        VideoLink fetchedUpdatedProduct = videoLinkRepository.findById(fetchedProduct.getId()).orElse(null);
         assertEquals(fetchedProduct.getDescription(), fetchedUpdatedProduct.getDescription());
 
         //verify count of products in DB
-        long productCount = productRepository.count();
+        long productCount = videoLinkRepository.count();
         assertEquals(productCount, 1);
 
         //get all products, list should only have one
-        Iterable<Product> products = productRepository.findAll();
+        Iterable<VideoLink> products = videoLinkRepository.findAll();
 
         int count = 0;
 
-        for(Product p : products){
+        for(VideoLink p : products){
             count++;
         }
 
