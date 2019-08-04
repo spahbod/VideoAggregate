@@ -9,6 +9,7 @@ import pl.videoaggregate.configuration.VideoLinkConfiguration;
 import pl.videoaggregate.domain.VideoLink;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -20,7 +21,7 @@ public class VideoLinkRepositoryTest {
     private VideoLinkRepository videoLinkRepository;
 
     @Test
-    public void testSaveProduct(){
+    public void testSaveProduct() {
         //setup product
         VideoLink product = new VideoLink();
         product.setDescription("Spring Framework Guru Shirt");
@@ -54,14 +55,66 @@ public class VideoLinkRepositoryTest {
         assertEquals(productCount, 1);
 
         //get all products, list should only have one
-        Iterable<VideoLink> products = videoLinkRepository.findAll();
+        List<VideoLink> products = videoLinkRepository.findAll();
 
-        int count = 0;
+        assertEquals(products.size(), 1);
+    }
 
-        for(VideoLink p : products){
-            count++;
-        }
+    @Test
+    public void testFindByPrice(){
 
-        assertEquals(count, 1);
+        BigDecimal price = new BigDecimal("19.00");
+        //setup product
+        VideoLink product = new VideoLink();
+        product.setDescription("Spring Framework Guru Shirt");
+        product.setPrice(price);
+        product.setProductId("1234");
+
+        //save product, verify has ID value after save
+        assertNull(product.getId()); //null before save
+        videoLinkRepository.save(product);
+        assertNotNull(product.getId()); //not null after save
+
+        List<VideoLink> products = videoLinkRepository.findByPrice(price);
+
+        assertEquals(products.size(), 1);
+    }
+
+
+    @Test
+    public void testFindByPriceEmpty(){
+        BigDecimal price = new BigDecimal("199.00");
+        List<VideoLink> products = videoLinkRepository.findByPrice(price);
+
+        assertEquals(products.size(), 0);
+    }
+
+    @Test
+    public void testFindByDescription(){
+
+        String description = "TEST";
+        //setup product
+        VideoLink product = new VideoLink();
+        product.setDescription(description);
+        product.setPrice(new BigDecimal("18.95"));
+        product.setProductId("1234");
+
+        //save product, verify has ID value after save
+        assertNull(product.getId()); //null before save
+        videoLinkRepository.save(product);
+        assertNotNull(product.getId()); //not null after save
+
+        List<VideoLink> products = videoLinkRepository.findByDescription(description);
+
+        assertEquals(products.size(), 1);
+    }
+
+    @Test
+    public void testFindByDescriptionEmpty(){
+        String description = "EMPTY";
+        List<VideoLink> products = videoLinkRepository.findByDescription(description);
+
+        assertEquals(products.size(), 0);
     }
 }
+
