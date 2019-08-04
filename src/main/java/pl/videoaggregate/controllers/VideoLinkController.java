@@ -23,13 +23,13 @@ public class VideoLinkController {
     }
 
     @RequestMapping("product/{id}")
-    public String showProduct(@PathVariable Integer id, Model model) {
+    public String showProduct(@PathVariable Long id, Model model) {
         model.addAttribute("product", videoLinkService.getProductById(id));
         return "productshow";
     }
 
     @RequestMapping("product/edit/{id}")
-    public String edit(@PathVariable Integer id, Model model) {
+    public String edit(@PathVariable Long id, Model model) {
         model.addAttribute("product", videoLinkService.getProductById(id));
         return "productform";
     }

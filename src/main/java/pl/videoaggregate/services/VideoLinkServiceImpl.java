@@ -17,7 +17,7 @@ public class VideoLinkServiceImpl implements VideoLinkService {
     }
 
     @Override
-    public VideoLink getProductById(Integer id) {
+    public VideoLink getProductById(Long id) {
         return videoLinkRepository.findById(id).orElse(null);
     }
 
