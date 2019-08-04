@@ -1,7 +1,7 @@
 package pl.videoaggregate.controllers;
 
+import lombok.AllArgsConstructor;
 import pl.videoaggregate.domain.VideoLink;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import pl.videoaggregate.services.VideoLinkService;
 
 @Controller
+@AllArgsConstructor
 public class VideoLinkController {
 
-    @Autowired
     private VideoLinkService videoLinkService;
 
     @RequestMapping(value = "/products", method = RequestMethod.GET)
@@ -47,5 +47,4 @@ public class VideoLinkController {
 
         return "redirect:/product/" + product.getId();
     }
-
 }

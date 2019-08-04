@@ -1,9 +1,8 @@
 package pl.videoaggregate.bootstrap;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import pl.videoaggregate.domain.VideoLink;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -12,12 +11,11 @@ import pl.videoaggregate.repositories.VideoLinkRepository;
 import java.math.BigDecimal;
 
 @Component
+@AllArgsConstructor
+@Slf4j
 public class VideoLinkLoader implements ApplicationListener<ContextRefreshedEvent> {
 
-    @Autowired
     private VideoLinkRepository videoLinkRepository;
-
-    private Logger log = LogManager.getLogger(VideoLinkLoader.class);
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
